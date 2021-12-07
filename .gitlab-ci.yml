@@ -1,5 +1,5 @@
 upload_project_to_s3
-	image:
+	image: banst/awscli 
 	name: banst/awscli
 	entrypoint: [""]
 script:
