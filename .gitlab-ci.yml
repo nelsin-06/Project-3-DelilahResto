@@ -1,0 +1,7 @@
+upload_project_to_s3
+	image:
+	name: banst/awscli
+	entrypoint: [""]
+script:
+ - aws configure set region sa-east-1
+ - aws s3 cp . s3://integracion-continua-delilahresto/ --recursive
