@@ -1,7 +1,13 @@
-upload_project_to_s3
-	image: banst/awscli 
-	name: banst/awscli
-	entrypoint: [""]
-script:
- - aws configure set region sa-east-1
- - aws s3 cp . s3://integracion-continua-delilahresto/ --recursive
+deploy PROD:
+  stage: deploy
+  except:
+    changes:
+      - it/**/*
+  image: python:3.6
+  script:
+    - echo "Installing aws command line"
+    - pip install awscli
+    - aws --version
+    - echo "Extracting the production build"
+    - echo "Uploading files to AWS Bucket"
+    - aws s3 cp --recursive . s3://$PROD_BUCKETS3
