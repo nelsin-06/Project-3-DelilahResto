@@ -1,3 +1,4 @@
+const config = require('../config');
 const UsersMethods = {};
 const usuarioModelo = require("../models/usuario.model");
 const usuarioValidation = require("../Schemas_joi/Usuarios/usuarioRegistro.Schema");
@@ -60,7 +61,7 @@ UsersMethods.login = async (req, res) => {
         const { password: pass, username } = await usuarioModelo.findOne({ email });
         const verificacion = await matchPassword(password, pass);
         if (verificacion) {
-            const token = JWT.sign({ username, email }, process.env.PASS);
+            const token = JWT.sign({ username, email }, config.JWT.PASSJWT);
             res.status(200).json({ token });
         } else {
             res.status(401).json("Unauthorized");

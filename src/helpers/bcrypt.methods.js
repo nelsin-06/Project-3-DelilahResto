@@ -1,6 +1,6 @@
+const config = require('../config');
 const bcrypt = require("bcryptjs");
-const { SALT_BCRYPT } = process.env;
-const saltN = Number.parseInt(SALT_BCRYPT, 10);
+const saltN = Number.parseInt(config.JWT.SALT_BCRIPT, 10);
 
 const encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(saltN);
