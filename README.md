@@ -1,4 +1,5 @@
-# SRPINT-PROJETS-2
+# SRPINT-PROJETS-3
+# Readme desactualizado. Contruccion en proceso
 
 Nos proponemos a realizar una API/REST para un restaurante en las cuales necesitamos cubrir rutas de usuarios (Registro, login y modificaciones), productos (Creación, eliminación, modificación y acción de listar), pedidos (Creación, modificación, eliminación y verificación de requisitos antes de realizar nuevas acciones en la pestaña de pedidos) y métodos de pago (creación, eliminación, modificación y acción de listar).
 

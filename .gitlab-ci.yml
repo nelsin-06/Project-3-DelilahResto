@@ -1,4 +1,4 @@
-deploy PROD:
+deploy PROD: 
   stage: deploy
   image:  
    name: amazon/aws-cli
