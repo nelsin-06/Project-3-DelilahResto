@@ -6,12 +6,11 @@ const swaggerOptions = {
         info: {
             title: "API - SPRINT PROJECT 3",
             version: "3.0.0",
-            description: "SPRINT PROJECT 3 - ACAMICA"
+            description: "SPRINT PROJECT 3 - ACAMICA - INTEGRACION CON AWS"
         },
         servers: [
             {
                 url: `http://localhost:${PORT}`,
-                url: '../',
                 description: "SERVER API"
             }
         ],

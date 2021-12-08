@@ -180,8 +180,8 @@ router.delete("/deldireccion", estadoUser, eliminarDireccion);
  * @swagger
  * /usuarios/cambiarestado/{IdDeUsuario}:
  *  post:
- *      summary: Eliminar una direccion a la libreta del usuario (ADMIN)
- *      description: Eliminar direccion registrada en la libreta del usuario.
+ *      summary: Suspender un usuario. (ADMIN)
+ *      description: Cambiar el estado de la cuenta del usuario a suspendido.
  *      tags: [USUARIOS]
  *      parameters:
  *        - in: path

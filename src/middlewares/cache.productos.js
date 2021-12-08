@@ -1,15 +1,18 @@
-const redis = require('redis');
-const clienteRedis = redis.createClient(6379);
+const clienteRedis = require('../helpers/conexionRedis');
 
-const cache = (req, res, next) => {
-    clienteRedis.get( 'PRODUCTOS', (err, productos) => {
-        if (err) throw err;
+const cache = async (req, res, next) => {
+    try {
+        const productos = await clienteRedis.get('PRODUCTOS');
         if (productos) {
             res.status(200).json(JSON.parse(productos));
         } else {
             next();
         }
-    });
+    } catch (err) {
+    if (err) throw err;
+    console.log(err);
+    res.status(500).json('INTERNAL SEVER ERROR=500')
+};
 }
 
 module.exports = cache;
