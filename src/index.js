@@ -15,11 +15,16 @@ app.use(helmet({
     contentSecurityPolicy: {directives: cspDefaults}
 }));
 
+app.get('/health-check', (req, res) => {res.status(200).send('.')});
+
 require("./database");
 
 const PORT = config.SERVER.PORT || 3020;
 
 app.use('/swagger', configSwaggerServer, configSwaggerSetup(configSwaggerSpecs));
+app.use('/', (req, res) => {
+    res.status(200).json('');
+})
 
 app.use(configJWT());
 app.use(msgErrorjwt);
@@ -33,7 +38,6 @@ app.use('/metodopagos', estadoUser,rutasPagos);
 app.use('/usuarios', rutasUsuarios);
 app.use('/productos', estadoUser, rutasProductos);
 app.use('/pedidos', estadoUser, rutasPedidos);
-
 
 app.listen(PORT, () => { console.log("index iniciado en el puerto: " + PORT); });
 
