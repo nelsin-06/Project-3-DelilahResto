@@ -22,7 +22,7 @@ describe('REGISTRO DE USUARIO', () => {
             direccion: [{ "direccion": "direccion de test" }]
         }
         chai.request(app)
-            .post('/usuarios/registrar')
+            .post('https://delilahapiweb.store/usuarios/registrar')
             .send(usuarioDuplicado)
             .end();
     });
@@ -35,7 +35,7 @@ describe('REGISTRO DE USUARIO', () => {
         await usuarioModelo.deleteOne({ email: 'correoreal@test.com' });
     });
 
-    describe('POST /usuarios/registrar', () => {
+    describe('POST /https://delilahapiweb.store/usuarios/registrar', () => {
 
         describe('Req a la API sin errores', () => {
 
@@ -49,7 +49,7 @@ describe('REGISTRO DE USUARIO', () => {
                     direccion: [{ direccion: "direccion prueba" }]
                 }
                 chai.request(app)
-                    .post('/usuarios/registrar')
+                    .post('/https://delilahapiweb.store/usuarios/registrar')
                     .send(usuario)
                     .end((err, response) => {
                         response.should.have.status(201);
@@ -73,7 +73,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -92,7 +92,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion de test" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -112,7 +112,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -131,7 +131,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -150,7 +150,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -173,7 +173,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -192,7 +192,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -211,7 +211,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -232,7 +232,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -251,7 +251,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -270,7 +270,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -289,7 +289,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{ "direccion": "direccion prueba" }]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -310,7 +310,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: [{}]
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -329,7 +329,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: "calle test #123-123"
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
@@ -348,7 +348,7 @@ describe('REGISTRO DE USUARIO', () => {
                         direccion: []
                     }
                     chai.request(app)
-                        .post('/usuarios/registrar')
+                        .post('/https://delilahapiweb.store/usuarios/registrar')
                         .send(usuario)
                         .end((err, response) => {
                             response.should.have.status(400);
