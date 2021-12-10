@@ -11,14 +11,5 @@ module.exports = {
             'SALT_BCRYPT': 10,
             'PASS': 'ANDLIa7dsyoq8wgdblashdO7ADYO87QdhiQDO892qeHQOñ',
         },
-
-        env_test: {
-            'PORT': '3000',
-            'MONGODB_HOST': 'ApiDelilahRestoNel',
-            'MONGODB_PASS': 'Gt2wVhLrs7WC5u6J',
-            'MONGODB_NAME_DATABASE': 'apidelilah',
-            'SALT_BCRYPT': 10,
-            'PASS': 'ANDLIa7dsyoq8wgdblashdO7ADYO87QdhiQDO892qeHQOñ',
-        },
-}],
+}]
 };

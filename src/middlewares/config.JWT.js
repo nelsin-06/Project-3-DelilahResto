@@ -1,6 +1,5 @@
-const config = require('../config');
 const expressJWT = require("express-jwt");
-require('dotenv').config();
+const config = require('../config');
 
 const configJWT = () => expressJWT({
     secret: config.JWT.PASSJWT,

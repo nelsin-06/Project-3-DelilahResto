@@ -9,10 +9,10 @@ ProductMethods.listaProductos = async (req, res) => {
     try {
     const productos = await productoModelo.find();
     await clienteRedis.setEx('PRODUCTOS', 60, JSON.stringify(productos));
-    res.status(200).json(productos);
+    setTimeout(function(){ res.status(200).json(productos); }, 3000);
     } catch (err) {
         console.log(err);
-        res.statud(500).json("INTERNAL SERVER ERROR");
+        res.status(500).json("INTERNAL SEVER ERRROR");
     }
 };
 

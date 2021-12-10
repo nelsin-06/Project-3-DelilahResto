@@ -20,7 +20,7 @@ Acontinuación se darán las instrucciones generales para la instalación e inic
  6. Navegador web de preferencia(Para las pruebas desde swagger).
 
  ### Instalación ✔️
-Después de que descargamos el código y de estar montado en el editor de código instalaremos sus dependencias/librerías de la siguiente forma. Sera un proceso exitoso si tenemos previamente instalado NODE en el equipo:
+Después de que descargamos el código y de estar montado en el editor de código instalaremos sus dependencias/librerías de la siguiente forma. Sera un proceso exitoso si tenemos previamente instalado NODE en el equipo:
 	
     npm install
 

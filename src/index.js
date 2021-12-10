@@ -8,7 +8,6 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 const estadoUser = require('./middlewares/usuarioSuspendido');
-
 const cspDefaults = helmet.contentSecurityPolicy.getDefaultDirectives();
 delete cspDefaults['upgrade-insecure-request'];
 app.use(helmet({
@@ -22,9 +21,6 @@ require("./database");
 const PORT = config.SERVER.PORT || 3020;
 
 app.use('/swagger', configSwaggerServer, configSwaggerSetup(configSwaggerSpecs));
-app.use('/', (req, res) => {
-    res.status(200).json('');
-})
 
 app.use(configJWT());
 app.use(msgErrorjwt);

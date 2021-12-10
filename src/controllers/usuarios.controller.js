@@ -6,7 +6,6 @@ const loginValidation = require("../Schemas_joi/Usuarios/usuarioLogin.Schema");
 const JWT = require("jsonwebtoken");
 const { encryptPassword, matchPassword } = require('../helpers/bcrypt.methods');
 const eliminarDireccionUsuario = require('../helpers/eliminarDireccion');
-const estadoUser = require('../middlewares/usuarioSuspendido');
 
 //Listar todos los usuarios.
 
