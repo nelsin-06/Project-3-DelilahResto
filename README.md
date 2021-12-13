@@ -9,6 +9,8 @@ A continuación se darán las principales características y configuraciones par
 
 Recordar que estamos realizando una API no tenemos front en ningunas de las rutas, la única ruta con elementos visuales disponibles es "https://delilahapiweb.store/swagger". La cual nos dirige al ambiente visual de swagger para la respectiva ejecución de pruebas.
 
+Se adjunta en el repositorio el diagrama de la composicion de la infraestructura de nuestra API.
+
 ### Tecnologias
 
 - INSTANCES EC2
