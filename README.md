@@ -1,36 +1,87 @@
-# SRPINT-PROJETS-3
-# Readme desactualizado. Contruccion en proceso
+# SRPINT-PROJETS-3 - AWS Y MONGO ATLAS
 
-Nos proponemos a realizar una API/REST para un restaurante en las cuales necesitamos cubrir rutas de usuarios (Registro, login y modificaciones), productos (Creación, eliminación, modificación y acción de listar), pedidos (Creación, modificación, eliminación y verificación de requisitos antes de realizar nuevas acciones en la pestaña de pedidos) y métodos de pago (creación, eliminación, modificación y acción de listar).
+Nos proponemos a realizar una API/REST para un restaurante en las cuales necesitamos cubrir rutas de usuarios (Registro, login y modificaciones), productos (CRUD), pedidos (CRUD y validaciones) y métodos de pago (CRUD).
 
-Cuenta con una capa de caché (Redis), una capa de seguridad (JWT), una capa de seguridad de la API (Helmet), y una rutina de test (Mocha y Chai) y es implementado con base de dato "Mongo" para el almacenamiento de datos.
-Variables de entorno implementadas en "Dotenv"
-
+La API esta instalada en los servicios de AWS y posee una conexion a atlas(MongoDB) para manejo de datos.
 # PROYECTO 🌎
 
-Acontinuación se darán las instrucciones generales para la instalación e inicio de la API
+A continuación se darán las principales características y configuraciones para el funcionamiento correcto, automático y siempre disponible presente en la API y los servidores AWS.
 
-### Pre-requisitos 🗒️
+Recordar que estamos realizando una API no tenemos front en ningunas de las rutas, la única ruta con elementos visuales disponibles es "https://delilahapiweb.store/swagger". La cual nos dirige al ambiente visual de swagger para la respectiva ejecución de pruebas.
 
- 1. Node instalado en el equipo con el cual crearemos nuestro entorno de ejecución.
- 2. Base de datos mongo instalada y corriendo en el equipo de prueba.(No es necesario crear bases de datos, colecciones o documentos con informacion especifica ya que el codigo hara esto automaticamente, solo se necesita el servicio de mongo activo y corriendo cuando se ejecute el codigo)
- 3. Gestor de caché "redis" instalado y corriendo en el equipo en el puerto "6379" (Esto si se desea ver el efecto del almacenamiento cache. Si por preferencia lo tiene en otro puerto modificar las variables de entorno de nuestra API en su fichero".env").
- 4. Por cuestiones prácticas añadimos el fichero .env a nuestro repositorio con las configuraciones de variables de entorno, si por preferencia o si su equipo no le permite iniciar la API con las configuraciones genéricas por favor modifique nuestro .env.
- 5. Editor de código de preferencia.
- 6. Navegador web de preferencia(Para las pruebas desde swagger).
+### Tecnologias
 
- ### Instalación ✔️
-Después de que descargamos el código y de estar montado en el editor de código instalaremos sus dependencias/librerías de la siguiente forma. Sera un proceso exitoso si tenemos previamente instalado NODE en el equipo:
-	
-    npm install
+- INSTANCES EC2
+- CENTOS 7
+- NGINX
+- NVM(Node y modulos de la API)
+- PM2
+- LOAD BALANCERS(EC2)
+- AUTO SCALING GROUP(EC2)
+- BUCKET S3
+- CRONTAB
+- ROUTE 53
+- ELASTICACHE(REDIS)
+- CLOUDFRONT
+- ATLAS(MongoDB)
+- CERBOT 
 
-Iniciamos nuestra API con **"npm start"**.Con este comando nuestra API empezara a correr y si su inicio fue exitoso en la línea de consola nos indicara el puerto en el cual se inició y un mensaje de confirmación de conexión con la base de datos.
+### Construcción
 
-    npm start
+ 1. La API esta montada sobre instancias de EC2 en sistema operativo CentOS 7 de LINUX.
+ 2. La API corre a través del servidor web NGINX el cual tiene instalado el certificado SSL correspondiente para el dominio "delilahapiweb.store" lo que nos asegura que todas las solicitudes sean a través de una conexión segura por HTTPS.
+ 3. Políticas de seguridad revísadas rigurosamente las cuales solo tiene los permisos necesarios para su funcionamiento correcto, limitando asi la posibilidad de intrusos y errores en los servidores.
+ 4. Dominio adquirido: "delilahapiweb.store" desde hostinger.co.
+ 5. Certificado SSL para el dominio.
+ 6. Balanceador de cargas de AWS.
+ 7. Cada una de las instancias tiene el módulo "PM2" para el monitoreo e inicio automático de la API y su rutina de test.
+ 8. Se realizó la conexión entre la API en EC2 y el servicio externo "Atlas" de MongoDB para el manejo de datos.
+ 9. El servicio S3 de AWS tiene 2 buckets. Uno de ellos es el encargado de la integración continua. ya que está interconectado a este repositorio para que cada actualización aquí subida se refleje en nuestra instancia y otro bucket el cual contiene una página estática con el diagrama de la composición de la infraestructura de nuestra API.
+ 10. Grupo de autoescalado el cual tiene como indicación lanzar máximo 5 instancias según las condiciones de uso.
+ 11. Capa de caché en Elasticache con redis de AWS.
+ 12. Cloudfront interconectado con el bucket de S3 el cual nos entrega el diagrama de la infraestructura de nuestra API y AWS.
+
+### Especificaciones. ✔️
+
+#### PM2
+
+Administrador de procesos en ejecución. en la instancia tiene 2 procesos, 1 es vigilar el funcionamiento, disponibilidad e integridad de la API, el otro se encarga de ejecutar la rutina de test para validar que toda la API funcione correctamente.
+
+#### Instances EC2
+
+Instancias montadas en sistema operativo LINUX con CentOS 7.
+
+#### LoadBalancer EC2
+
+El balanceador de cargas está configurado para que haga un check health cada 60 a la ruta https://delilahapiweb.store/health-check.
+
+#### AutoScaling Group EC2
+
+El grupo de autoescalado está configurado para lanzar una nueva instancia cuando el uso de la CPU de alguna de las instancias supere el 60%. Como máximo 5 instancias y como mínimo se debe tener 1.
+
+#### Route 53
+
+Manejo de los DNS en conjunto con el dominio adquirido y el redireccionamiento de peticiones a los respectivos servicios.
+
+#### S3 BUCKET CI/CD
+
+Hay configurado un bucket en el servicio de s3 el cual está encargado de la integración continua con nuestro repositorio y lo que se desplegá en la instancia de EC2. Esto se hace interconectando el bucket de s3 y el repositorio de gitlab. En la instancia se está ejecutando un script cada minuto el cual se encarga de sincronizar lo que está alojado en el bucket y así mantener las instancias actualizadas a la última versión del repositorio.
+
+#### Crontab
+
+Como se mencionó anteriormente para la integración continua del repositorio y la API se utiliza un script el cual esta alojado en la carpeta "script" del directorio principal del usuario. El script envía una petición al bucket de s3 y sincroniza los cambios del bucket con los ficheros locales. Si existen cambios se ejecuta el comando para reiniciar el servicio de PM2 para aplicar los cambios.
+
+#### S3 BUCKET CLOUDFRONT
+
+Hay un bucket configurado con el servicio de CloudFront para ofrecernos una página estática con la imagen de la organización de la infraestructura que compone la API.
+
+#### Elasticache - REDIS
+
+La API cuenta con una capa de cache con redis. Servicio que también esta alojado en los servidores de AWS. La capa de cache solo aplica para las rutas relacionadas a los productos.
 
 ## Datos pre-creados para pruebas 🗂️
 
-Para que la prueba se haga más práctica se creó una rutina de creación de un usuario con permisos de administrador, un producto general y un método de pago general con los que se pueden realizar las pruebas. Los datos de los documentos generados por default son los siguientes:
+Para que la prueba se haga más práctica se creó una rutina de creación de un usuario con permisos de administrador, un producto general y un método de pago general con los que se pueden realizar las pruebas. Los datos de los documentos generados por default son los siguientes:
 
 ### usuarios
 
@@ -82,82 +133,24 @@ Para que la experiencia sea más agradable y entender correctamente la API se de
 10. Al iniciar sesion se respondera con un "Token", el cual utilizaremos para iniciar sesion en swagger.(Se debe copiar el contenido del token sin comillas u otros string que no sea exclusivamente el del token en la casilla de autenticacion del swagger).
 11. Podemos iniciar sesion con las siguientes credenciales: email : correo1@gmail.com - password : passwordsecreto
 
-## Funcionamiento 📈
-
-Continuación se explicará de manera general el funcionamiento de las rutas de nuestra API, si necesita autenticación y/o permisos de administrador.
-
-### usuarios
-
-/registrar = Ruta en donde podremos registrar un usuario nuevo con su respectivo email, username, password, teléfono y podremos agregar una dirección a nuestra libreta de direcciones.(auth: NO, Admin: NO)
-
-/ingresar = Ruta en donde podremos ingresar nuestras credenciales para iniciar sesión en nuestra API. Después de un inicio de sesión exitoso nos devolvería un token con el cual podremos registrarnos en las demás rutas.(auth: NO, Admin: NO)
-
-/micuenta = Ruta en donde podremos obtener los datos de nuestra cuenta.(auth: SI, Admin: NO)
-
-/obtenerusuarios = Ruta en donde podremos obtener la lista con todos los usuarios registrados.(auth: SI, Admin: SI)
-
-/aggdireccion = Ruta en donde podremos agregar a la libreta del usuario una nueva dirección.(auth: SI, Admin: NO)
-
-/deldireccion = Ruta en donde podremos eliminar una dirección de la libreta del usuario.(auth: SI, Admin: NO)
-
-/cambiarestado = Ruta en donde podremos suspender la cuenta de un usuario.(auth: SI, Admin: SI)
-
-### productos
-
-/listaproductos = Ruta en donde listaremos los productos.(auth: SI, Admin: NO)
-
-/edicionproductos = Ruta en donde actualizaremos nombre y/o precio del producto.(auth: SI, Admin: SI)
-
-/eliminarproductos = Ruta en donde podremos eliminar un producto de la lista.(auth: SI, Admin: SI)
-
-/agregarproductos = Ruta en donde podremos agregar un nuevo producto.(auth: SI, Admin: SI)
-
-### metodos de pago
-
-/metodosdepago = Ruta en donde listaremos los métodos de pago disponibles.(auth: SI, Admin: NO)
-
-/agremetodopago = Ruta en donde podremos agregar un nuevo método de pago.(auth: SI, Admin: SI)
-
-/editarmetodo = Ruta en donde podremos editar los medios de pago.(auth: SI, Admin: SI)
-
-/eliminarmetodo = Ruta en donde podremos eliminar un medio de pago.(auth: SI, Admin: SI)
-
-### pedidos
-
-/realizarpedido = Ruta en donde podremos realizar un pedido, este tendrá en su mayor parte referencias a otras colecciones por medio de _id.(auth: SI, Admin: NO)
-
-/mipedido = Ruta en donde podremos listar todos los pedidos del usuario registrado.(auth: SI, Admin: NO)
-
-/totalpedidos = Ruta en donde podremos listar todos los pedidos de todos los usuarios.(auth: SI, Admin: SI)
-
-/estado = Ruta en donde podremos confirmar nuestro pedido.(auth: SI, Admin: NO)
-
-/estado = Ruta en donde podremos cambiar el estado del pedido del usuario y finalizarlo.(auth: SI, Admin: SI)
-
-/editarpedido = Ruta en donde podremos eliminar un producto de nuestra orden.(auth: SI, Admin: NO)
-
-/editarpedido = Ruta en donde podremos editar la cantidad del producto en la orden.(auth: SI, Admin: NO)
-
-/editarpedido = Ruta en donde podremos agregar un nuevo pedido a nuestra orden.(auth: SI, Admin: NO)
-
 ## Ejecucion de pruebas ⚙️
 
-Para realizar las pruebas se utiliza el ambiente gráfico SWAGGER, se puede acceder desde el siguiente [LINK](http://localhost:3000/swagger) o ingresando a su navegador de preferencia y yendo a la ruta "http://localhost:3000/swagger"
-
-Si el puerto de inicio de NODE es diferente a "3000" también se debe modificar en la ruta al swagger.
-
-El acceso a la pagina de pruebas dependera de si el comando "npm start" se haya ejecutado.
+Para realizar las pruebas se utiliza el ambiente gráfico SWAGGER, se puede acceder desde el siguiente [LINK](https://delilahapiweb.store/swagger) o ingresando a su navegador de preferencia y yendo a la ruta "https://delilahapiweb.store/swagger"
 
 ## Ejecucion de test 🧪
 
 Este test está dirigido a las posibles respuestas positivas o negativas que podría recibir la ruta de "REGISTRO DE USUARIOS". 
-Podemos ejecutar el test de la siguiente forma:
+Podemos ejecutar el test accediendo a la consola de la instancia y ejecutando el comando:
 
-    npm test
+    pm2 restart API-TEST
+
+Con esto haremos que la rutina de test se inicie y podremos verificar el exito del test accediendo al log de pm2.
+
+    pm2 log API-TEST
 
  El test está implementado con mocha y chai.
 
-## Construido con🛠️
+## API construida con🛠️
 - dotenv
 - express
 - jsonwebtoken
